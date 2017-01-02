@@ -1,0 +1,1 @@
+foltia_notify_newanime
