@@ -134,13 +134,6 @@ if (! $rowdata) {
 		}elseif(in_array($tidsid, $reservedtvrecordtidsidarray)){
 			$rclass = "planned";
 		}
-		$pid = htmlspecialchars($rowdata[7]);
-		$tid = htmlspecialchars($rowdata[0]);
-		$sid = htmlspecialchars($rowdata[10]);
-		$title = htmlspecialchars($rowdata[2]);
-		$subtitle =  htmlspecialchars($rowdata[4]);
-		$pdate = foldate2print($rowdata[5]);
-		$station = $rowdata[1];
 		// 上記いずれのフラグもついていないもの($rclass="")を抽出
 		if( $rclass == "" ){
 			$newprogs[] = $rowdata;
@@ -161,7 +154,7 @@ if (! $rowdata) {
 		$msg = "New Anime programs are available.\r\n".$foltiauri."animeprogram/index.php?mode=new\r\n\r\n";
 		if ($mailcsv == 0){
 			foreach($diffprogs as $progdata){
-				$msg .= "TID: ".$progdata[0]."\r\n"."放送局: ".$progdata[1]."\r\n"."番組名: ".$progdata[2]."\r\n"."放送日時: ".foldate2print($progdata[5])."(".$progdata[8].")\r\n"."syobocal: http://cal.syoboi.jp/tid/".$progdata[0]."\r\n"."予約: ".$foltiauri."reservation/reserveprogram.php?tid=".$progdata[0]."\r\n\t\n";
+				$msg .= "TID: ".$progdata[0]."\r\n"."放送局: ".$progdata[1]."\r\n"."番組名: ".$progdata[2]."\r\n"."放送日時: ".foldate2print($progdata[5])."(".$progdata[8].")\r\n"."syobocal: http://cal.syoboi.jp/tid/".$progdata[0]."\r\n"."予約: ".$foltiauri."reservation/reserveprogram.php?tid=".$progdata[0]."\r\n\r\n";
 			}
 		}else{
 			$msg .= "TID,放送局,番組名,話数,サブタイトル,放送日時,放送時間／分\r\n";
@@ -171,6 +164,6 @@ if (! $rowdata) {
 		}
 		mb_send_mail($mailto, $mailsubj, $msg, "From: ".$mailfrom);
 	}else{
-		//print "no now programs\n";
+		//print "no new programs\n";
 	} 
 ?>
