@@ -1,0 +1,5 @@
+{
+    "require": {
+        "egersdorfer/prowl": "dev-psr/develop"
+    }
+}

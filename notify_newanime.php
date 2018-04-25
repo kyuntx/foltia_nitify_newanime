@@ -16,18 +16,31 @@ notify_newanime.php
 
 */
 
+require_once(__DIR__.'/vendor/autoload.php');
 include("/home/foltia/php/phpcommon/foltialib.php");
 
 // foltia ANIME LOCKER のURI
 $foltiauri = "http://192.168.xxx.xxx/";
 
-// メールの送信先アドレス、送信元アドレス、サブジェクト
+// メール通知の設定
+//// メール通知を行う場合は 1 とする
+$mail_enable = 0;
+
+//// メールの送信先アドレス、送信元アドレス、サブジェクト
 $mailto = "to@example.jp";
 $mailfrom = "from@example.com";
 $mailsubj = "[foltia ANIME LOCKER] New program notification";
 
-// CSV形式で送信する場合は 1 とする
+//// CSV形式で送信する場合は 1 とする
 $mailcsv = 0;
+
+// Prowl 通知の設定
+//// Prowl 通知を行う場合は 1 とする
+$prowl_enable = 0;
+
+//// Prowl の API Key
+$api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+
 
 mb_language("uni");
 mb_internal_encoding("UTF-8");
@@ -162,7 +175,25 @@ if (! $rowdata) {
 				$msg .= $progdata[0].",".$progdata[1].",".$progdata[2].",".$progdata[3].",".$progdata[4].",".foldate2print($progdata[5])."(".$progdata[8]."),".$progdata[6]."\r\n";
 			}
 		}
-		mb_send_mail($mailto, $mailsubj, $msg, "From: ".$mailfrom);
+
+		if ($mail_enable == 1){
+			mb_send_mail($mailto, $mailsubj, $msg, "From: ".$mailfrom);
+		}
+
+		if ($prowl_enable == 1){
+			$conf = array(
+				'application' => 'foltia ANINE LOCKER',
+				'key' => $api_key,
+				'failOnNotAuthorized' => false,
+				'subject' => 'New program notification',
+				'message' => $msg,
+				'action' => '',
+				'priority' => 2
+		        );
+			$p = new Prowl\Prowl($conf);
+			$p->push();
+		}
+
 	}else{
 		//print "no new programs\n";
 	} 
