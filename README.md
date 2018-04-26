@@ -22,24 +22,24 @@ $mailsubj = "[foltia ANIME LOCKER] New program notification";
 $mailcsv = 0;
 ```
 - foltia サーバからメールが送信できるように設定を行います。
-  - postfix から他のSMTPサーバに relay させる場合は /etc/postfix/main.cf に以下のように設定します。
+    - postfix から他のSMTPサーバに relay させる場合は /etc/postfix/main.cf に以下のように設定します。
 ```
 relayhost = [smtp.example.jp]
 ```
 - foltia ユーザの crontab に登録します。
-  - デフォルトでは、毎日 5:19 にしょぼいカレンダーとの同期が走っているため、そのしばらく後くらいがよさそうです。（ここでは6:19）
+    - デフォルトでは、毎日 5:19 にしょぼいカレンダーとの同期が走っているため、そのしばらく後くらいがよさそうです。（ここでは6:19）
 
 ```crontab
 19 6 * * * php /home/foltia/tools/notify_newanime.php >/dev/null 2>&1
 ```
 - うまくいっていれば、新番組が同期されると通知されるはずです。
 - Prowl 通知を行う場合は、 notify_newanime.php を置いたディレクトリに [egersdorfer/prowl](https://packagist.org/packages/egersdorfer/prowl)を導入し、apikey を設定します。
- - egersdorfer/prowl の導入
+    - egersdorfer/prowl の導入
 ```
-$ http://getcomposer.org/composer.phar
+$ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
 ```
- - 通知設定
+    - 通知設定
 ```
 // Prowl 通知の設定
 //// Prowl 通知を行う場合は 1 とする
@@ -51,11 +51,11 @@ $api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 ## 動き
 - 以下の条件を全て満たす場合に通知されます。（foltiaの新番組画面で白背景のもの）
-  - 録画予約済みではない
-  - 他局で同一番組を録画予約済みではない
-  - 再放送ではない
+    - 録画予約済みではない
+    - 他局で同一番組を録画予約済みではない
+    - 再放送ではない
 - 一度通知した番組は通知しません
-  - /home/foltia/newprogram.txt に前回実行時の情報を保存するため、こちらを削除すると再通知されます。
+    - /home/foltia/newprogram.txt に前回実行時の情報を保存するため、こちらを削除すると再通知されます。
 - 基本的な動作は php/animeprogram/index.php をパクっています。
 
 ## 通知メールサンプル
