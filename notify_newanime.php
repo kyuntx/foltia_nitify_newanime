@@ -7,16 +7,18 @@ notify_newanime.php
  https://github.com/kyuntx/foltia_notify_newanime
 
 目的
-アニメ新番組をメールで通知します。
+アニメ新番組をメールまたはProwlで通知します。
 
 事前にサーバ側でメールの送信設定が行われていること。
-（postfix に relay_host の設定を行うなど）
+（POSTFIX に RELAY_HOST の設定を行うなど）
+Prowl 通知を行う場合は、composer にて egersdorfer/prowl が
+導入されていること。
 
  DCC-JPL Japan/foltia project
 
 */
 
-require_once(__DIR__.'/vendor/autoload.php');
+include_once(__DIR__.'/vendor/autoload.php');
 include("/home/foltia/php/phpcommon/foltialib.php");
 
 // foltia ANIME LOCKER のURI
