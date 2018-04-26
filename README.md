@@ -1,6 +1,6 @@
 # foltia ANIME LOCKER 新アニメ番組通知スクリプト
 
-foltia ANIME LOCKER ( https://foltia.com/ANILOC/ )でしょぼいカレンダーから同期されたアニメの新番組をメールで通知します。
+[foltia ANIME LOCKER](https://foltia.com/ANILOC/)でしょぼいカレンダーから同期されたアニメの新番組をメールまたは[Prowl](https://www.prowlapp.com/)で通知します。
 
 ## 使い方
 - notify_newanime.php を /home/foltia/ 以下の適当な場所に置きます。 （ここでは /home/foltia/tools/ に置いたとします）
@@ -8,6 +8,10 @@ foltia ANIME LOCKER ( https://foltia.com/ANILOC/ )でしょぼいカレンダー
 ```php
 // foltia ANIME LOCKER のURI
 $foltiauri = "http://192.168.xxx.xxx/";
+
+// メール通知の設定
+//// メール通知を行う場合は 1 とする
+$mail_enable = 1;
 
 // メールの送信先アドレス、送信元アドレス、サブジェクト
 $mailto = "to@example.jp";
@@ -29,6 +33,18 @@ relayhost = [smtp.example.jp]
 19 6 * * * php /home/foltia/tools/notify_newanime.php >/dev/null 2>&1
 ```
 - うまくいっていれば、新番組が同期されると通知されるはずです。
+- Prowl 通知を行う場合は、 notify_newanime.php を置いたディレクトリに [egersdorfer/prowl](https://packagist.org/packages/egersdorfer/prowl)を導入し、apikey を設定します。
+```egersdorfer/prowl 
+$ http://getcomposer.org/composer.phar
+$ php composer.phar install
+```notify_newanime.php
+// Prowl 通知の設定
+//// Prowl 通知を行う場合は 1 とする
+$prowl_enable = 1;
+
+//// Prowl の API Key
+$api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+```
 
 ## 動き
 - 以下の条件を全て満たす場合に通知されます。（foltiaの新番組画面で白背景のもの）
