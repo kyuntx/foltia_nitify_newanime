@@ -34,10 +34,13 @@ relayhost = [smtp.example.jp]
 ```
 - うまくいっていれば、新番組が同期されると通知されるはずです。
 - Prowl 通知を行う場合は、 notify_newanime.php を置いたディレクトリに [egersdorfer/prowl](https://packagist.org/packages/egersdorfer/prowl)を導入し、apikey を設定します。
-```egersdorfer/prowl 
+ - egersdorfer/prowl の導入
+```
 $ http://getcomposer.org/composer.phar
 $ php composer.phar install
-```notify_newanime.php
+```
+ - 通知設定
+```
 // Prowl 通知の設定
 //// Prowl 通知を行う場合は 1 とする
 $prowl_enable = 1;
